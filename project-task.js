@@ -34,11 +34,12 @@ and the program continues running as intended.
 */
 
 
+// Will need to import / install readline-sync if not done so already within project dir: npm install readline-sync 
+const readlineSync = require('readline-sync');
 
-// Initial Code with Bugs
+// Initial Code with Bugs (modified to use readline-sync)
 let animals = [];
 let fees = [];
-
 function addAnimal(name, fee) {
     if (!name || fee < 0) {
         throw new Error("Invalid animal name or adoption fee!");
@@ -46,7 +47,6 @@ function addAnimal(name, fee) {
     animals.push(name);
     fees.push(fee);
 }
-
 function getAdoptionFee(animalName) {
     let index = animals.indexOf(animalName);
     if (index === -1) {
@@ -54,25 +54,21 @@ function getAdoptionFee(animalName) {
     }
     return fees[index];
 }
-
 // Main program
 console.log("Welcome to the Pet Shelter System");
-
 while (true) {
-    let action = prompt("Choose an action: 'add', 'fee', or 'exit': ").toLowerCase();
-
+    let action = readlineSync.question("Choose an action: 'add', 'fee', or 'exit': ").toLowerCase();
     if (action === "exit") {
         console.log("Goodbye!");
         break;
     }
-
     if (action === "add") {
-        let animal = prompt("Enter the animal's name: ");
-        let fee = Number(prompt("Enter the adoption fee: "));
+        let animal = readlineSync.question("Enter the animal's name: ");
+        let fee = Number(readlineSync.question("Enter the adoption fee: "));
         addAnimal(animal, fee);
         console.log(`${animal} added with a fee of $${fee}.`);
     } else if (action === "fee") {
-        let animal = prompt("Enter the animal's name to find its adoption fee: ");
+        let animal = readlineSync.question("Enter the animal's name to find its adoption fee: ");
         console.log(`${animal}'s adoption fee is $${getAdoptionFee(animal)}.`);
     } else {
         console.log("Invalid action. Please choose 'add', 'fee', or 'exit'.");
