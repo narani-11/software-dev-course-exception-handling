@@ -32,10 +32,16 @@ const readlineSync = require('readline-sync');
 // Initial Code with Bugs (modified to use readline-sync)
 let animals = [];
 let fees = [];
+try{
 function addAnimal(name, fee) {
     if (!name || fee < 0) {
         throw new Error("Invalid animal name or adoption fee!");
     }
+}
+}
+  catch{
+     console.log("animal at index", animals[index].name);
+}
     animals.push(name);
     fees.push(fee);
 }
