@@ -32,19 +32,14 @@ const readlineSync = require('readline-sync');
 // Initial Code with Bugs (modified to use readline-sync)
 let animals = [];
 let fees = [];
-try{
 function addAnimal(name, fee) {
-    if (!name || fee < 0) {
+    if (!name || fee < 0||isNaN(fee)) {
         throw new Error("Invalid animal name or adoption fee!");
     }
-}
-}
-catch {
-  console.log("animal at index", animals[index].name);
-}
-    animals.push(name);
-    fees.push(fee);
 
+ animals.push(name);
+    fees.push(fee);
+}
 function getAdoptionFee(animalName) {
     let index = animals.indexOf(animalName);
     if (index === -1) {
@@ -61,14 +56,23 @@ while (true) {
         break;
     }
     if (action === "add") {
+      try{
         let animal = readlineSync.question("Enter the animal's name: ");
         let fee = Number(readlineSync.question("Enter the adoption fee: "));
         addAnimal(animal, fee);
-        console.log(`${animal} added with a fee of $${fee}.`);
+        console.log(`${animal} added with a fee of $${fee}.`);}
+        catch(err){
+            console.error(err.message);
+        }
     } else if (action === "fee") {
+      try{
         let animal = readlineSync.question("Enter the animal's name to find its adoption fee: ");
         console.log(`${animal}'s adoption fee is $${getAdoptionFee(animal)}.`);
-    } else {
+    } 
+      catch(err){
+        console.error(err.message);
+    }
+    else {
         console.log("Invalid action. Please choose 'add', 'fee', or 'exit'.");
     }
 }
@@ -88,3 +92,20 @@ Code Flow Problems:
 Structured Exception Handling:
   Add try/catch blocks to handle the above errors gracefully.
 */
+add
+Name: <blank>
+result: runtime error
+add
+Name: dog
+Fee: $
+result: Nan displays (logic error)
+add
+Name: dog
+Fee: -5
+result: runtime error
+fee
+Name: <blank>
+result: runtime error
+fee
+Name: abc
+result: runtime error*/
